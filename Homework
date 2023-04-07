@@ -49,3 +49,26 @@ print(create_slogan("Steve"))
 #type_: str
 #contains: [] - list of symbols that an argument should contain
 #If some of the rules' checks returns False, the function should return False and print the reason it failed; otherwise, return the result.
+
+
+def arg_rules(max_length: int, type_: type, contains: list):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for arg in args:
+                if not isinstance(arg, type_):
+                    print(f"Error: argument {arg} is not of type {type_}")
+                    return False
+                if len(arg) > max_length:
+                    print(f"Error: argument {arg} exceeds maximum length of {max_length}")
+                    return False
+                if not all(char in arg for char in contains):
+                    print(f"Error: argument {arg} does not contain all required characters {contains}")
+                    return False
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+@arg_rules(max_length=15, type_=str, contains=['a', 'e','o'])
+def my_func(arg1: str, arg2: str):
+    return arg1 + arg2
+
