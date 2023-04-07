@@ -1,3 +1,25 @@
+#Task 1
+#Write a decorator that prints a function with arguments passed to it.
+#NOTE! It should print the function, not the result of its execution!
+
+def logger(func):
+    def wrapper(*args,**kwargs):
+        print(func.__name__,"called with",*args)
+        
+    return wrapper
+
+@logger
+def add(x,y):
+    return x+y
+
+@logger
+def square_all(*args):
+    return[arg**2for arg in args]
+
+print(add(8,9))
+print(square_all(2,4))
+
+
 #Task2
 #Write a decorator that takes a list of stop words and replaces them with * inside the decorated function
 
@@ -17,4 +39,4 @@ def create_slogan(name: str) -> str:
 
 assert create_slogan("Steve") == "Steve drinks * in his brand new *!"
 
-print(create_slogab("Steve"))
+print(create_slogan("Steve"))
